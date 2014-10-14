@@ -1,0 +1,12 @@
+#+TITLE:    rnrweb
+#+AUTHOR:   Børge Antonsen
+
+* rnrweb - a silex thingy
+
+Just a webpage I'm making
+
+* Note to self:
+** TODO Add some .gitmodules (unit-converter for now)
+** TODO Add some basic PHPUnit tests
+** TODO A basic form for using unit-converter
+** TODO Upload it somewhere
