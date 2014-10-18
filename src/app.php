@@ -32,36 +32,33 @@ $app['assetic.options'] = array(
 
 $app['assetic.filter_manager'] = $app->share(
     $app->extend('assetic.filter_manager', function($fm, $app) {
-	$fm->set('cssmin', new Assetic\Filter\CssMinFilter());
-	$fm->set('jsqueeze', new Assetic\Filter\JSqueezeFilter());
-
+        $fm->set('cssmin', new Assetic\Filter\CssMinFilter());
+        $fm->set('jsqueeze', new Assetic\Filter\JSqueezeFilter());
 	return $fm;
     })
 );
 
 $app['assetic.asset_manager'] = $app->share(
     $app->extend('assetic.asset_manager', function($am, $app) {
-	$am->set('styles', new Assetic\Asset\AssetCache(
-	    new Assetic\Asset\GlobAsset(
-		__DIR__ . '/../resources/css/*.css',
-		array($app['assetic.filter_manager']->get('cssmin'))
-	    ),
-	    new Assetic\Cache\FilesystemCache(__DIR__ . '/../var/cache/assetic')
-	));
-
-	$am->get('styles')->setTargetPath('css/styles.css');
-
-    $am->set('scripts', new Assetic\Asset\AssetCache(
-	new Assetic\Asset\GlobAsset(
-	    __DIR__ . '/../resources/js/*.js',
-	    array($app['assetic.filter_manager']->get('jsqueeze'))
-	),
-	new Assetic\Cache\FilesystemCache(__DIR__ . '/../var/cache/assetic')
-    ));
-
-	$am->get('scripts')->setTargetPath('js/scripts.js');
-
-	return $am;
+        /* App CSS */
+        $am->set('styles', new Assetic\Asset\AssetCache(
+            new Assetic\Asset\GlobAsset(
+                __DIR__ . '/../resources/css/*.css',
+                array($app['assetic.filter_manager']->get('cssmin'))
+            ),
+            new Assetic\Cache\FilesystemCache(__DIR__ . '/../var/cache/assetic')
+        ));
+        $am->get('styles')->setTargetPath('css/styles.css');
+        /* App JS */
+        $am->set('scripts', new Assetic\Asset\AssetCache(
+            new Assetic\Asset\AssetCollection(array(
+                new Assetic\Asset\GlobAsset(__DIR__ . '/../modules/unit-converter/src/*.js', array($app['assetic.filter_manager']->get('jsqueeze'))),
+                new Assetic\Asset\GlobAsset(__DIR__ . '/../resources/js/*.js', array($app['assetic.filter_manager']->get('jsqueeze')))
+            )),
+            new Assetic\Cache\FilesystemCache(__DIR__ . '/../var/cache/assetic')
+        ));
+        $am->get('scripts')->setTargetPath('js/scripts.js');
+        return $am;
     })
 );
 
