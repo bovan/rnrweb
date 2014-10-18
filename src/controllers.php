@@ -8,6 +8,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 //Request::setTrustedProxies(array('127.0.0.1'));
 
+
+if ($app['assetic.options']['auto_dump_assets']){
+    $dumper = $app['assetic.dumper'];
+    if (isset($app['twig'])) {
+        $dumper->addTwigAssets();
+    }
+    $dumper->dumpAssets();
+}
+
 $app->get('/', function () use ($app) {
     return $app['twig']->render('index.html', array());
 })

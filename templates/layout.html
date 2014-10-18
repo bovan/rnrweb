@@ -11,13 +11,11 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="css/normalize.min.css">
-    <link rel="stylesheet" href="css/main.css">
     <title>{% block title '' %} - My Silex Application</title>
-    <link href="{{ app.request.basepath }}/assets/normalize.css" rel="stylesheet" type="text/css" />
-    <link href="{{ app.request.basepath }}/assets/main.css" rel="stylesheet" type="text/css" />
+    <link href="{{ app.request.basepath }}/css/styles.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         {% block content %}{% endblock %}
+        <script src="js/scripts.js"></script>
     </body>
 </html>
