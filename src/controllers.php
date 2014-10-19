@@ -23,6 +23,11 @@ $app->get('/', function () use ($app) {
 ->bind('homepage')
 ;
 
+$app->get('/partial/timeform', function () use ($app) {
+        return $app['twig']->render('timeform.html', array());
+    });
+
+
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
         return;
